@@ -1,0 +1,37 @@
+/** Genre families, matching Part 20 of docs/MASTER_OUTLINE.md. Each family has its own color (see DESIGN_SYSTEM.md). */
+export const GENRE_FAMILIES = [
+  { id: 'hip-hop', name: 'Hip-Hop & Rap', section: '20.1', color: '#F97316' },
+  { id: 'rnb-soul-funk-gospel', name: 'R&B, Soul, Funk & Gospel', section: '20.2', color: '#A855F7' },
+  { id: 'pop', name: 'Pop', section: '20.3', color: '#EC4899' },
+  { id: 'rock', name: 'Rock', section: '20.4', color: '#EF4444' },
+  { id: 'metal', name: 'Metal', section: '20.5', color: '#A1A1AA' },
+  { id: 'house', name: 'House', section: '20.6', color: '#06B6D4' },
+  { id: 'techno', name: 'Techno', section: '20.7', color: '#6366F1' },
+  { id: 'trance', name: 'Trance', section: '20.8', color: '#8B5CF6' },
+  { id: 'breaks-garage-bass', name: 'Breaks, Garage & Bass Music', section: '20.9', color: '#84CC16' },
+  { id: 'dnb-jungle', name: 'Drum & Bass & Jungle', section: '20.10', color: '#22C55E' },
+  { id: 'hard-dance', name: 'Hard Dance', section: '20.11', color: '#F43F5E' },
+  { id: 'downtempo-ambient', name: 'Downtempo, Ambient & Chill', section: '20.12', color: '#2DD4BF' },
+  { id: 'synth-retro-internet', name: 'Synth, Retro & Internet-era', section: '20.13', color: '#D946EF' },
+  { id: 'disco-retro-dance', name: 'Disco & Retro Dance', section: '20.14', color: '#FACC15' },
+  { id: 'industrial-dark-electronic', name: 'Industrial & Dark Electronic', section: '20.15', color: '#A8A29E' },
+  { id: 'jazz', name: 'Jazz', section: '20.16', color: '#0EA5E9' },
+  { id: 'blues', name: 'Blues', section: '20.17', color: '#3B82F6' },
+  { id: 'country-americana', name: 'Country & Americana', section: '20.18', color: '#D97706' },
+  { id: 'folk-singer-songwriter', name: 'Folk & Singer-Songwriter', section: '20.19', color: '#65A30D' },
+  { id: 'classical-art', name: 'Classical & Art Music', section: '20.20', color: '#FDE68A' },
+  { id: 'gospel-devotional', name: 'Gospel, Christian & Devotional', section: '20.21', color: '#FCD34D' },
+  { id: 'reggae-jamaican', name: 'Reggae & Jamaican', section: '20.22', color: '#16A34A' },
+  { id: 'latin-caribbean', name: 'Latin & Caribbean', section: '20.23', color: '#FF6F59' },
+  { id: 'african', name: 'African', section: '20.24', color: '#B45309' },
+  { id: 'middle-east-north-africa', name: 'Middle East & North Africa', section: '20.25', color: '#0D9488' },
+  { id: 'south-asia', name: 'South Asia', section: '20.26', color: '#C026D3' },
+  { id: 'east-southeast-asia-pacific', name: 'East & Southeast Asia & the Pacific', section: '20.27', color: '#F87171' },
+  { id: 'europe-regional', name: 'Europe (Regional)', section: '20.28', color: '#60A5FA' },
+  { id: 'chiptune-game', name: 'Chiptune & Game', section: '20.29', color: '#4ADE80' },
+  { id: 'experimental-avant-garde', name: 'Experimental & Avant-garde', section: '20.30', color: '#9CA3AF' },
+  { id: 'functional-media', name: 'Functional & Media Music', section: '20.31', color: '#7DD3FC' },
+] as const
+
+export type GenreFamilyId = (typeof GENRE_FAMILIES)[number]['id']
+export const GENRE_FAMILY_IDS = GENRE_FAMILIES.map((f) => f.id) as [GenreFamilyId, ...GenreFamilyId[]]

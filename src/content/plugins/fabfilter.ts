@@ -1,0 +1,35 @@
+import { definePlugins } from '../define'
+
+export default definePlugins([
+  {
+    id: 'fabfilter-pro-q',
+    name: 'FabFilter Pro-Q',
+    developer: 'FabFilter',
+    version: '4',
+    categories: ['eq'],
+    formats: ['VST3', 'AU', 'AAX', 'CLAP'],
+    os: ['windows', 'macos'],
+    priceTier: 'mid',
+    approxPriceUsd: 199,
+    licensing: 'perpetual',
+    bestFor: 'Fast surgical and musical EQ with dynamic, mid/side, and linear-phase modes.',
+    alternatives: ['tdr-nova'],
+    url: 'https://www.fabfilter.com',
+    lastVerified: '2026-10-26',
+  },
+  {
+    id: 'fabfilter-pro-c',
+    name: 'FabFilter Pro-C',
+    developer: 'FabFilter',
+    categories: ['dynamics'],
+    formats: ['VST3', 'AU', 'AAX', 'CLAP'],
+    os: ['windows', 'macos'],
+    priceTier: 'mid',
+    licensing: 'perpetual',
+    bestFor: 'A clean, highly visual compressor with character styles for any source.',
+    alternatives: ['tdr-kotelnikov', 'klanghelm-dc1a'],
+    url: 'https://www.fabfilter.com',
+    lastVerified: '2026-10-26',
+    notes: 'Stub entry: confirm the current version and price in the Stage 4 golden-sample pass.',
+  },
+])
