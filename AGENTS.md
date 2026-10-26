@@ -1,0 +1,79 @@
+# MusiKit: Agent Guide
+
+MusiKit is an installable, offline-capable web app (PWA) that serves as the most thorough music-production guide and cheat sheet available. It covers theory, songwriting, rap, singing, beatmaking, sound design, recording, mixing, mastering, business, and large encyclopedias of genres, instruments, effects, and plugins. The primary reader is a bedroom artist or producer working in a DAW.
+
+## Read these first
+
+- `docs/MASTER_OUTLINE.md`: the canonical scope. Every page maps to a numbered section.
+- `docs/CONTENT_TEMPLATES.md`: what every entry type must contain.
+- `docs/DESIGN_SYSTEM.md`: colors, callouts, tags, typography, motion.
+- `docs/SOURCES.md`: the reference canon and the list of facts that need re-verification.
+
+## Stack
+
+- React 19, TypeScript (strict), and Vite 8.
+- Tailwind CSS 4, and `vite-plugin-pwa` for offline support.
+- Zod 4 for content schemas.
+- Planned for Stage 3: Framer Motion, Radix/shadcn, and Lucide icons. Tone.js comes in Stage 6.
+
+## Commands
+
+- `npm run dev`: development server.
+- `npm run validate:content`: validate all content, report coverage, and exit non-zero on errors.
+- `npm test`: validator regression tests (Node test runner).
+- `npm run sync:outline`: regenerate `src/content/registry/outline.generated.ts` after editing `docs/MASTER_OUTLINE.md`.
+- `npm run build`: validate, type-check, then build. The build fails on any content error.
+- `npm run lint`: oxlint.
+
+## Layout
+
+- `src/content/schema/`: Zod schemas, the source of truth for entry shapes.
+- `src/content/registry/`: pillars, effect categories, instrument families, genre families, and the generated outline.
+- `src/content/plugins/`: the plugin registry, one file per developer.
+- `src/content/entries/{effects,instruments,genres,guide,glossary}/`: the content.
+- `src/content/validate.ts`: cross-collection validation, shared by the CLI and the app.
+- `src/content/collections.ts`: browser-side loading through `import.meta.glob`.
+- `scripts/`: Node scripts (validation, outline sync, tests).
+
+## Content workflow (one batch per session)
+
+1. **Scope:** pick one batch from the Content Production Order in `docs/MASTER_OUTLINE.md`. A batch is one Guide part, or 8 to 15 encyclopedia entries from one family.
+2. **Research:** use reputable sources (see `docs/SOURCES.md`) and record them in each entry's `sources`.
+3. **Register plugins:** add any new plugins to `src/content/plugins/` before referencing them.
+4. **Write:** write entries with the `define*` helpers, set `status: 'review'`, and set `lastVerified` to today.
+5. **Validate:** run `npm run validate:content` and `npm test`, and fix every error and warning.
+6. **Review:** check the pages visually in the browser (from Stage 3 onward).
+7. **Commit:** once the user approves, set `status: 'published'` and commit the batch.
+
+## Writing voice
+
+- **Tone and person:** write for a motivated bedroom producer. Use plain language, address the reader as "you", and be practical.
+- **Jargon:** define it on first use, and link the glossary term with `[[glossary:id]]`.
+- **Specificity:** prefer concrete numbers and steps (for example "start at 4:1, 10 ms attack") over vague advice, and say when numbers are starting points rather than rules.
+- **Layering:** lead every page with its Cheat Sheet bullets, then go deep in blocks and expandables.
+- **Spelling:** US English.
+
+## Accuracy rules
+
+- **No invented facts:** never invent songs, release years, artist facts, plugin features, prices, or versions. If you can't verify something, leave it out.
+- **Plugin versions:** set a plugin's `version` only when it has been verified.
+- **Plugin references:** recommend plugins only by registry ID. The free and budget tiers must match each plugin's registry `priceTier`.
+- **Time-sensitive facts:** loudness targets, platform policies, and prices belong on the re-verification list in `docs/SOURCES.md`.
+- **Safety:** health and legal topics (vocal health, hearing, copyright, contracts) get a `warning` callout recommending a professional where appropriate.
+
+## Quality checklist (every entry, before review)
+
+- [ ] Every required template field is filled with specific, useful content (no filler).
+- [ ] The Cheat Sheet bullets stand on their own for someone in a hurry.
+- [ ] It includes at least one Tip, and where relevant a Common Mistake, Myth-Buster, or Unorthodox Trick.
+- [ ] Plugin recommendations cover Industry, Pro, Budget, Free, and Stock where they exist.
+- [ ] Cross-references link to related effects, instruments, genres, guide pages, and glossary terms.
+- [ ] Sources are cited and `lastVerified` is set.
+- [ ] `npm run validate:content` shows 0 errors and 0 warnings for the batch.
+
+## Do not
+
+- Do not edit `src/content/registry/outline.generated.ts` by hand.
+- Do not hard-code colors in components; use the design tokens (from Stage 3) or the registries.
+- Do not loosen a schema just to make content pass. Fix the content, or discuss changing the template.
+- Do not add dependencies without a clear need.
