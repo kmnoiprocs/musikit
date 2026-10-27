@@ -2,6 +2,7 @@ import { ExternalLink, Info, Layers, Plug, Repeat, SearchX, Sparkles } from 'luc
 import { useState, type ReactNode } from 'react'
 import { Link, useParams } from 'react-router'
 import { EntryCard, StaggerGrid, StaggerItem } from '../components/content/Cards'
+import { PluginPortrait } from '../components/content/PluginPortrait'
 import { RefChips } from '../components/content/Refs'
 import { BookmarkButton } from '../components/layout/PageActions'
 import { PageHeader } from '../components/layout/PageHeader'
@@ -172,6 +173,10 @@ export function PluginPage() {
           </>
         }
       />
+      <figure className="mt-6 max-w-md">
+        <PluginPortrait id={plugin.id} className="h-auto w-full" />
+        <figcaption className="mt-2 text-xs text-muted">Illustrated control map, not a product screenshot. The real panel is on the developer site.</figcaption>
+      </figure>
       <PageSection id="details" title="Details" icon={Info} color={tier.color}>
         <dl className="card divide-y divide-line">
           <Detail label="Developer">{plugin.developer}</Detail>

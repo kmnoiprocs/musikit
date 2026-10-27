@@ -7,6 +7,7 @@ import { accent, cn } from '../../lib/cn'
 import { pluginHref, pluginsById } from '../../lib/content'
 import { DAW_LABELS } from '../../lib/labels'
 import { PriceTag } from '../ui/Chip'
+import { PluginPortrait } from './PluginPortrait'
 import { RichText } from './RichText'
 
 /** Plugin recommendations by tier: Industry, Pro, Budget, Free, and Stock. Empty tiers are hidden. */
@@ -22,6 +23,7 @@ export function PluginTierPanel({ recs, className }: { recs: PluginRecs; classNa
               if (!p) return null
               return (
                 <Link key={id} to={pluginHref(id)} className="group -mx-2 flex items-start gap-3 rounded-xl px-2 py-2 transition-colors hover:bg-fg/[0.04]">
+                  <PluginPortrait id={id} className="mt-0.5 h-14 w-[5.5rem] shrink-0" />
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                       <span className="font-semibold text-fg">{p.name}</span>

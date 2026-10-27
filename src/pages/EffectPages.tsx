@@ -5,6 +5,7 @@ import { GroupTile } from '../components/content/Cards'
 import { Callout } from '../components/content/Callout'
 import { CheatSheetCard } from '../components/content/CheatSheetCard'
 import { Paragraph } from '../components/content/Blocks'
+import { CompressorLab } from '../components/content/CompressorLab'
 import { PluginTierPanel } from '../components/content/PluginTierPanel'
 import { RefChips } from '../components/content/Refs'
 import { RichText } from '../components/content/RichText'
@@ -213,6 +214,7 @@ export function EffectPage() {
           defaultOpen: true,
           content: (
             <div className="space-y-4">
+              {effect.id === 'compressor' || effect.parent === 'compressor' ? <CompressorLab effectId={effect.id} /> : null}
               <Paragraph text={effect.howItWorks} />
               <Expandable compact title="History" summary="Where this effect came from">
                 <Paragraph text={effect.history} />
