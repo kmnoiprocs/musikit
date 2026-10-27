@@ -1,6 +1,14 @@
 # MusiKit Design System
 
-The visual rules for MusiKit. Stage 3 turns these into Tailwind theme tokens and React components. Change a value here first, then in code.
+The visual rules for MusiKit. Change a value here first, then in code. Every token is rendered live on the app's `/design` page.
+
+**Where tokens live in code:**
+
+- Surfaces, text, fonts, the type scale, and animations: `src/index.css` (Tailwind `@theme`).
+- Pillar and part accents: `src/content/registry/pillars.ts`. Genre family colors: `src/content/registry/genreFamilies.ts`.
+- Everything else (callouts, frequency bands, tags, tiers, track colors, drum lanes, arrangement sections): `src/design/tokens.ts`.
+
+**The accent system:** any element can set `--accent` (in React, `style={accent(color)}`). Inside it, `bg-accent/15`, `border-accent/30`, and `text-accent-ink` tint the subtree. `accent-ink` mixes the accent toward white in the dark theme and toward black in the light theme, so accent text stays readable on either surface.
 
 ## Principles
 
@@ -19,6 +27,15 @@ The visual rules for MusiKit. Stage 3 turns these into Tailwind theme tokens and
 - Text: `#E5E7EB`
 - Muted text: `#A1A1AA`
 - Faint text and dividers: `#52525B`
+
+## Surfaces and text (light theme)
+
+- Background: `#F6F6F9`
+- Surface and elevated surface: `#FFFFFF`
+- Border: `#E3E3EA`
+- Text: `#15151C`
+- Muted text: `#585863`
+- Faint text and dividers: `#A1A1AA`
 
 ## Pillar and part accents
 
@@ -102,19 +119,42 @@ Recommended in the Workflow guide (Part 22) and used in every session diagram.
   - Mastering Engineer: `gauge`
   - Artist-Entrepreneur: `briefcase`
   - Media Composer: `clapperboard`
-- **Entry status** (development builds only): stub, draft, review, published.
+- **Entry status** (development builds only): stub gray `#71717A`, draft amber `#F59E0B`, review sky `#0EA5E9`, published emerald `#10B981`.
 
-## Typography (proposed for Stage 3)
+## Icons
 
-- **UI and body:** Inter (variable).
+Pillars, parts, effect categories, and instrument families each have a Lucide icon name in their registry. `src/design/icons.tsx` maps those names to components, and a missing or misspelled name is a compile error. Genre families use color instead of icons.
+
+## Plugin tiers
+
+- **Registry price tiers** (badges on every plugin): Free teal `#14B8A6`, Budget lime `#84CC16`, Mid-price sky `#0EA5E9`, Premium violet `#8B5CF6`, Subscription amber `#F59E0B`.
+- **Recommendation tiers** (the plugin panel on entries), each with a Lucide icon:
+  - Industry Standard: gold `#F5C542`, `crown`
+  - Pro Alternatives: sky `#0EA5E9`, `award`
+  - Budget: lime `#84CC16`, `piggy-bank`
+  - Free: teal `#14B8A6`, `gift`
+  - Stock: slate `#94A3B8`, `package`
+
+## Music data displays
+
+- **Progression modes:** major amber `#F59E0B`, minor indigo `#6366F1`, modal teal `#14B8A6`.
+- **Drum-grid lanes** (matched by lane name, drawn from the track colors): 808 and bass orange `#F97316`; kick red `#EF4444`; snare, clap, and rim amber `#F59E0B`; hats and cymbals yellow `#EAB308`; toms and percussion teal `#14B8A6`; anything else purple `#A855F7`.
+- **Drum-grid cells:** accent is a solid glowing cell, hit is a solid cell at 70%, ghost is an outlined tint, roll is striped, and rest is empty.
+- **Arrangement sections** (matched by section name): verse blue `#3B82F6`; pre-chorus cyan `#06B6D4`; chorus and hook pink `#EC4899`; post-chorus fuchsia `#D946EF`; drop orange `#F97316`; build amber `#F59E0B`; bridge violet `#8B5CF6`; breakdown teal `#14B8A6`; solo green `#22C55E`; intro, outro, and tag slate `#94A3B8`; anything else gray `#A1A1AA`.
+
+## Typography
+
+- **UI and body:** Inter (variable), 16 px with about 1.75 line height for reading.
 - **Display headings:** Space Grotesk.
 - **Numbers, settings, and code:** JetBrains Mono, so values like `4:1`, `-14 LUFS`, and `10 ms` line up.
 - **Layout:** keep body text near a 72-character measure.
-- **Heading scale:** 1.25 ratio.
+- **Heading scale:** 1.25 ratio: `text-h4` 1.25rem, `text-h3` 1.5625rem, `text-h2` 1.953rem, `text-h1` 2.441rem, `text-display` 3.815rem.
+- **Eyebrows:** 11 px uppercase labels with wide tracking, in the accent ink color.
+- All three fonts are self-hosted, so they work offline.
 
 ## Motion
 
-- **Library:** Framer Motion.
+- **Library:** Motion (the current name of Framer Motion), loaded through `LazyMotion`.
 - **Duration:** 150 to 250 ms for UI feedback; springs for expanding cards and drawers.
 - **Page transitions:** short fade-and-rise; shared-element transitions from card to detail page where it helps.
 - **Lists:** stagger items by about 30 ms when filtering encyclopedia grids.
@@ -123,18 +163,22 @@ Recommended in the Workflow guide (Part 22) and used in every session diagram.
 
 ## Component inventory (built in Stage 3)
 
-- **App shell:** sidebar navigation by pillar and part, breadcrumbs, a command palette for search (Ctrl+K), a dark/light toggle, and a global Guide/Cheat Sheet mode toggle.
+- **App shell:** sidebar navigation by pillar, part, and section (written sections show a glowing dot), breadcrumbs, a command palette for search (Ctrl+K or `/`), a dark/light toggle, a global Guide/Cheat Sheet mode toggle, and a mobile navigation drawer.
+- **Page layout:** page header with an accent glow, an "On this page" rail with scroll-spy and reading progress, previous and next links, and bookmark buttons.
 - **Cards:**
   - Entry card for genre, instrument, effect, and plugin grids.
+  - Group tile for effect categories and instrument and genre families.
   - Cheat Sheet card.
-  - Technique card.
+  - Technique card (collapsible).
   - Callout.
-- **Disclosure:** expandable section, tabs, and accordion groups.
+- **Disclosure:** expandable section and tabs with an animated indicator.
 - **Data displays:**
-  - Settings table, control/knob list, meter explainer.
+  - Settings table, data table, control cards, meter list.
   - Plugin tier panel: Industry, Pro, Budget, Free, Stock.
   - Drum grid.
-  - Frequency band bar and instrument range keyboard.
-  - BPM and tempo badge.
-  - Progression chips.
-- **Tags:** skill, role, family, and pillar chips; glossary hover tooltips.
+  - Frequency spectrum chart (with hover readout and range overlays) and instrument range keyboard (with hover note, MIDI, and frequency).
+  - Tempo badge, BPM scale, and LUFS scale.
+  - Progression cards.
+  - Arrangement timeline and key-moments timeline.
+- **Tags:** skill, role, price, family, and status chips; glossary hover tooltips.
+- **Planned pages:** outline sections without a written page show "What this page will cover", built from the outline's summary and sub-bullets.

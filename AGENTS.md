@@ -14,14 +14,18 @@ MusiKit is an installable, offline-capable web app (PWA) that serves as the most
 - React 19, TypeScript (strict), and Vite 8.
 - Tailwind CSS 4, and `vite-plugin-pwa` for offline support.
 - Zod 4 for content schemas.
-- Planned for Stage 3: Framer Motion, Radix/shadcn, and Lucide icons. Tone.js comes in Stage 6.
+- React Router 8 (data router) for pages.
+- Motion (the current package name of Framer Motion), used through `LazyMotion` and `m.*` components.
+- Radix primitives (the unified `radix-ui` package), `cmdk` for the command palette, and Lucide icons.
+- Fonts are self-hosted with Fontsource (Inter, Space Grotesk, JetBrains Mono) so they work offline.
+- Tone.js comes in Stage 6.
 
 ## Commands
 
 - `npm run dev`: development server.
 - `npm run validate:content`: validate all content, report coverage, and exit non-zero on errors.
 - `npm test`: validator regression tests (Node test runner).
-- `npm run sync:outline`: regenerate `src/content/registry/outline.generated.ts` after editing `docs/MASTER_OUTLINE.md`.
+- `npm run sync:outline`: regenerate `src/content/registry/outline.generated.ts` after editing `docs/MASTER_OUTLINE.md`. Section titles, one-line summaries, and sub-bullets all feed the app (planned pages show them as "What this page will cover").
 - `npm run build`: validate, type-check, then build. The build fails on any content error.
 - `npm run lint`: oxlint.
 
@@ -34,6 +38,23 @@ MusiKit is an installable, offline-capable web app (PWA) that serves as the most
 - `src/content/validate.ts`: cross-collection validation, shared by the CLI and the app.
 - `src/content/collections.ts`: browser-side loading through `import.meta.glob`.
 - `scripts/`: Node scripts (validation, outline sync, tests).
+
+App code (Stage 3):
+
+- `src/index.css`: Tailwind theme tokens. Surfaces and text are CSS variables that switch with `data-theme`.
+- `src/design/tokens.ts`: theme-independent colors and icons (callouts, frequency bands, tags, tiers, track colors).
+- `src/design/icons.tsx`: maps the Lucide icon names used in registries to components.
+- `src/lib/content.ts`: lookups, the outline navigation model, cross-reference resolution, and backlinks.
+- `src/lib/search.ts`: the command-palette index. `src/lib/prefs.ts`: theme, reading mode, bookmarks, and recent pages.
+- `src/app/`: the shell (router, sidebar, top bar, command palette).
+- `src/components/ui/`: primitives. `src/components/content/`: content renderers and data displays. `src/components/layout/`: page header and detail layout.
+- `src/pages/`: one file per page family. Entry templates live in `EffectPages`, `InstrumentPages`, `GenrePages`, and `GuidePage`.
+
+## Visual review (Stage 3 onward)
+
+- Run `npm run dev` and open the page you changed, in both themes and at phone width.
+- `/design` shows every token and component live. In development builds, `/status` shows coverage and validation issues, and status badges appear on entries.
+- Templates hide empty fields, so a sparse entry still renders cleanly; check that new fields actually appear.
 
 ## Content workflow (one batch per session)
 
@@ -74,6 +95,6 @@ MusiKit is an installable, offline-capable web app (PWA) that serves as the most
 ## Do not
 
 - Do not edit `src/content/registry/outline.generated.ts` by hand.
-- Do not hard-code colors in components; use the design tokens (from Stage 3) or the registries.
+- Do not hard-code colors in components; use the design tokens or the registries. To tint a subtree, set its accent with `style={accent(color)}` (from `src/lib/cn.ts`) and use `bg-accent/15`, `border-accent/30`, and `text-accent-ink` inside it.
 - Do not loosen a schema just to make content pass. Fix the content, or discuss changing the template.
 - Do not add dependencies without a clear need.

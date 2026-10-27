@@ -12,6 +12,13 @@ npm test                  # validator tests
 npm run build             # validate, type-check, build
 ```
 
+## Finding your way around
+
+- **Search:** press Ctrl+K (⌘K on a Mac) or `/` on any page.
+- **Guide or Cheat Sheet:** the toggle in the top bar switches between full explanations and just the essentials.
+- **Design system:** `/design` shows every color, type style, and component live.
+- **Content status:** in development builds, `/status` shows coverage and validation issues.
+
 ## Documentation
 
 - [Master outline](docs/MASTER_OUTLINE.md): the full scope and build roadmap.
