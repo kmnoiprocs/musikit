@@ -40,6 +40,8 @@ function sectionCrumbs(p: Params): Crumb[] {
   return [...partCrumbs(part), { label: `${section.number} ${page?.title ?? section.shortTitle}` }]
 }
 
+const basename = import.meta.env.BASE_URL.replace(/\/$/, '')
+
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -107,4 +109,4 @@ export const router = createBrowserRouter([
       { path: '*', element: <NotFoundPage />, handle: crumbs(() => [{ label: 'Not found' }]) },
     ],
   },
-])
+], { basename })

@@ -1,5 +1,5 @@
 import { RotateCcw, TriangleAlert } from 'lucide-react'
-import { isRouteErrorResponse, useRouteError } from 'react-router'
+import { isRouteErrorResponse, Link, useRouteError } from 'react-router'
 import { IconTile } from '../components/ui/Misc'
 import { CALLOUTS } from '../design/tokens'
 
@@ -17,9 +17,9 @@ export default function ErrorPage() {
         <button type="button" onClick={() => window.location.reload()} className="inline-flex h-10 items-center gap-2 rounded-xl bg-fg px-4 text-sm font-medium text-bg">
           <RotateCcw className="size-4" aria-hidden /> Reload
         </button>
-        <a href="/" className="inline-flex h-10 items-center rounded-xl border border-line bg-surface px-4 text-sm font-medium text-fg">
+        <Link to="/" className="inline-flex h-10 items-center rounded-xl border border-line bg-surface px-4 text-sm font-medium text-fg">
           Go home
-        </a>
+        </Link>
       </div>
     </div>
   )

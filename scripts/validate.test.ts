@@ -68,9 +68,22 @@ describe('content validation', () => {
     const errors = errorsAfter('effects', (e) => {
       e.status = 'published'
       e.summary = 'TODO write this'
+      e.unorthodoxTechniques = []
     })
     expectError(errors, 'placeholder text')
     expectError(errors, 'unorthodoxTechniques has 0 item(s)')
+  })
+
+  it('rejects a broken effect parent', () => {
+    expectError(errorsAfter('effects', (e) => (e.parent = 'not-a-real-effect')), 'does not exist')
+    const raw = structuredClone(base)
+    const group = raw.effects.find((item) => (item.data as { id?: string }).id === 'compressor')
+    assert.ok(group)
+    ;(group.data as { parent?: string }).parent = 'vca-compressor'
+    expectError(
+      validateContent(raw).errors.map((e) => e.message),
+      'cannot have a parent',
+    )
   })
 
   it('converts note names to MIDI numbers', () => {

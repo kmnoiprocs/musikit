@@ -1,4 +1,4 @@
-import { Check, CircleX, Cpu, Disc3, FlaskConical, Gauge, Link2, ShieldQuestion, SlidersHorizontal, Sparkles, Target, Wrench, X, Zap } from 'lucide-react'
+import { Check, CircleX, Cpu, Disc3, FlaskConical, Gauge, GitBranch, Layers, Link2, ShieldQuestion, SlidersHorizontal, Sparkles, Target, Wrench, X, Zap } from 'lucide-react'
 import { Link, useParams } from 'react-router'
 import { StaggerGrid, StaggerItem } from '../components/content/Cards'
 import { GroupTile } from '../components/content/Cards'
@@ -27,22 +27,43 @@ import { EntryGrid, GroupPage, PageContainer, PageSection, type CardItem } from 
 
 const C = COLORS.effects
 
-const effectCard = (e: Effect): CardItem => {
+const TYPE_GROUPS = ['Circuit', 'Job', 'Style']
+
+function effectKindLabel(e: Effect): string {
+  if (e.kind === 'unit') return 'Hardware unit'
+  if (e.kind === 'group') return 'Effect group'
+  if (e.parent) return 'Type'
+  return 'Effect type'
+}
+
+function compareEffects(a: Effect, b: Effect): number {
+  const rank = (e: Effect) => (e.kind === 'group' ? -1 : (e.typeOrder ?? 1000))
+  const delta = rank(a) - rank(b)
+  if (delta !== 0) return delta
+  const group = TYPE_GROUPS.indexOf(a.typeGroup ?? '') - TYPE_GROUPS.indexOf(b.typeGroup ?? '')
+  if (a.typeGroup !== b.typeGroup && group !== 0) return group
+  return a.name.localeCompare(b.name)
+}
+
+const effectCard = (e: Effect, group?: string): CardItem => {
   const cat = effectCategoryById.get(e.category)
+  const parent = e.parent ? effectsById.get(e.parent) : undefined
+  const childCount = library.effects.filter((child) => child.parent === e.id).length
   return {
     key: e.id,
     href: `/effects/${e.id}`,
     title: e.name,
-    eyebrow: cat?.name,
+    eyebrow: parent?.name ?? cat?.name,
     summary: e.summary,
     color: C,
     icon: cat?.icon ?? 'zap',
-    group: e.category,
-    searchText: e.aliases.join(' '),
+    group: group ?? e.category,
+    searchText: [e.aliases.join(' '), e.typeGroup ?? '', parent?.name ?? ''].filter(Boolean).join(' '),
     footer: (
       <>
-        <Chip size="xs">{e.kind === 'unit' ? 'Hardware unit' : 'Effect type'}</Chip>
-        <Chip size="xs">{plural(e.controls.length, 'control')}</Chip>
+        <Chip size="xs">{effectKindLabel(e)}</Chip>
+        {e.typeGroup && <Chip size="xs">{e.typeGroup}</Chip>}
+        {childCount > 0 && <Chip size="xs">{plural(childCount, 'type')}</Chip>}
       </>
     ),
   }
@@ -76,7 +97,7 @@ export function EffectsIndex() {
       </PageSection>
       <PageSection id="all" title="All effects" icon={Zap} color={C}>
         <EntryGrid
-          items={library.effects.map(effectCard)}
+          items={[...library.effects].sort(compareEffects).map((e) => effectCard(e))}
           noun={['effect', 'effects']}
           groups={effectCategories.map((c) => ({ id: c.id, label: c.name }))}
           emptyIcon={Zap}
@@ -104,7 +125,7 @@ export function EffectCategoryPage() {
       color={C}
       icon={cat.icon}
       outline={cat.outline}
-      items={cat.entries.map(effectCard)}
+      items={[...cat.entries].sort(compareEffects).map((e) => effectCard(e))}
       noun={['effect', 'effects']}
       emptyText={`The ${cat.name.toLowerCase()} entries are planned. The coverage below shows what is coming.`}
       prev={prev && { href: prev.href, title: prev.name, color: C }}
@@ -143,7 +164,11 @@ export function EffectPage() {
   useRecordVisit(effect && ref && { href: ref.href, title: effect.name, kind: `Effect · ${ref.kindLabel}`, color: C })
   if (!effect || !ref) return <NotFoundPage />
   const cat = effectCategoryById.get(effect.category)
+  const parent = effect.parent ? effectsById.get(effect.parent) : undefined
+  const children = library.effects.filter((e) => e.parent === effect.id).sort(compareEffects)
+  const siblings = parent ? library.effects.filter((e) => e.parent === parent.id && e.id !== effect.id).sort(compareEffects) : []
   const genres = resolveRefs(effect.genres)
+  const kindIcon = effect.kind === 'unit' ? Cpu : effect.kind === 'group' ? Layers : SlidersHorizontal
 
   return (
     <DetailLayout
@@ -163,9 +188,15 @@ export function EffectPage() {
           iconName={cat?.icon}
           meta={
             <>
-              <Chip color={C} icon={effect.kind === 'unit' ? Cpu : SlidersHorizontal}>
-                {effect.kind === 'unit' ? 'Hardware unit' : 'Effect type'}
+              <Chip color={C} icon={kindIcon}>
+                {effectKindLabel(effect)}
               </Chip>
+              {parent && (
+                <Chip href={`/effects/${parent.id}`} color={C} icon={GitBranch}>
+                  Part of {parent.name}
+                </Chip>
+              )}
+              {effect.typeGroup && <Chip>{effect.typeGroup}</Chip>}
               {entryMeta(effect)}
             </>
           }
@@ -174,6 +205,41 @@ export function EffectPage() {
       }
       cheatSheet={<CheatSheetCard items={effect.cheatSheet} />}
       sections={[
+        {
+          id: 'types',
+          title: 'Types',
+          icon: Layers,
+          cheat: true,
+          description: 'Each card is its own page: what it sounds like, where to start, and which plugins actually do that job.',
+          content: children.length > 0 && (
+            <EntryGrid
+              items={children.map((child) => effectCard(child, child.typeGroup))}
+              noun={['type', 'types']}
+              groups={TYPE_GROUPS.map((label) => ({ id: label, label }))}
+              emptyIcon={Layers}
+              emptyTitle="No types yet"
+              emptyText="Type pages will appear here."
+              color={C}
+            />
+          ),
+        },
+        {
+          id: 'siblings',
+          title: parent ? `More ${parent.name} types` : 'More types',
+          icon: Layers,
+          content: siblings.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              <Chip href={`/effects/${parent!.id}`} color={C} icon={Layers}>
+                {parent!.name} overview
+              </Chip>
+              {siblings.map((s) => (
+                <Chip key={s.id} href={`/effects/${s.id}`} color={C}>
+                  {s.name}
+                </Chip>
+              ))}
+            </div>
+          ),
+        },
         {
           id: 'how-it-works',
           title: 'How It Works',
@@ -226,7 +292,7 @@ export function EffectPage() {
         },
         {
           id: 'variants',
-          title: 'Types & Variants',
+          title: children.length > 0 ? 'Variants' : 'Types & Variants',
           icon: Disc3,
           content: effect.variants.length > 0 && <NamedList items={effect.variants} />,
         },
@@ -329,7 +395,11 @@ export function EffectPage() {
                 <div key={h.name} className="card p-4">
                   <div className="font-semibold text-fg">{h.name}</div>
                   {h.maker && <div className="text-xs text-muted">{h.maker}</div>}
-                  {h.note && <p className="mt-1.5 text-sm text-fg/75">{h.note}</p>}
+                  {h.note && (
+                    <p className="mt-1.5 text-sm text-fg/75">
+                      <RichText text={h.note} />
+                    </p>
+                  )}
                 </div>
               ))}
             </div>

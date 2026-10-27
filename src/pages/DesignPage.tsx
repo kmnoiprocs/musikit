@@ -195,7 +195,7 @@ export default function DesignPage() {
       <PageSection id="cards" title="Cards" icon={Layers} color={VIOLET}>
         {guide && <CheatSheetCard items={guide.cheatSheet.length >= 4 ? guide.cheatSheet : [...guide.cheatSheet, 'Cheat Sheet bullets lead every page and stand on their own.', 'In Cheat Sheet mode, pages show only these and other essentials.']} />}
         <div className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {compressor && <EntryCard href="/effects/compressor" title={compressor.name} eyebrow="Dynamics" summary={compressor.summary} color="#EF4444" icon="activity" footer={<Chip size="xs">Effect type</Chip>} />}
+          {compressor && <EntryCard href="/effects/compressor" title={compressor.name} eyebrow="Dynamics" summary={compressor.summary} color="#EF4444" icon="activity" footer={<Chip size="xs">{compressor.kind === 'group' ? 'Effect group' : 'Effect type'}</Chip>} />}
           {flute && <EntryCard href="/instruments/flute" title={flute.name} eyebrow="Flutes & Whistles" summary={flute.summary} color="#22C55E" icon="wind" footer={<Chip size="xs">C4–C7</Chip>} />}
           {trap && <EntryCard href="/genres/trap" title={trap.name} eyebrow="Hip-Hop & Rap" summary={trap.description} color="#F97316" icon="disc-3" footer={<Chip size="xs">130–170 BPM</Chip>} />}
           <GroupTile href="/genres/family/house" title="House" number="20.6" color="#06B6D4" count={0} noun={['genre', 'genres']} planned={13} />

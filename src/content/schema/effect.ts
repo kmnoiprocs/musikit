@@ -1,14 +1,30 @@
 import { z } from 'zod'
 import { EFFECT_CATEGORY_IDS } from '../registry/effectCategories'
-import { NamedDescription, PluginRecs, Ref, Setting, Technique, Text } from './common'
+import { NamedDescription, PluginRecs, Ref, Setting, Slug, Technique, Text } from './common'
 import { EntryMeta } from './meta'
 
 export const EffectSchema = EntryMeta.extend({
   name: Text,
   aliases: z.array(Text).default([]),
   category: z.enum(EFFECT_CATEGORY_IDS),
-  /** "type" = a kind of effect (compressor); "unit" = a specific legendary device (LA-2A). */
-  kind: z.enum(['type', 'unit']).default('type'),
+  /**
+   * "group" = a family page that owns type cards (compressor, and later EQ, reverb, saturation).
+   * "type" = a kind of effect (a VCA compressor, a plate reverb).
+   * "unit" = a specific legendary device (the LA-2A).
+   */
+  kind: z.enum(['group', 'type', 'unit']).default('type'),
+  /**
+   * Parent effect id when this page is a specific type under a group.
+   * The parent must be kind "group" and in the same category.
+   */
+  parent: Slug.optional(),
+  /**
+   * Clusters sibling type cards on the group page. Reuse the same labels
+   * for every sibling, for example "Circuit", "Job", and "Style".
+   */
+  typeGroup: z.string().optional(),
+  /** Lower numbers sort first among sibling type cards. */
+  typeOrder: z.number().int().nonnegative().optional(),
   summary: Text,
   cheatSheet: z.array(Text).min(3).max(8),
   history: Text,

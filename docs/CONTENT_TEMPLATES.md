@@ -81,7 +81,10 @@ Used by effects, instruments, and genres. Every ID must exist in the plugin regi
 - **Identity:**
   - `name`, `aliases`
   - `category`: one of the 12 Part 18 categories
-  - `kind`: `type` (a kind of effect, like a compressor) or `unit` (a specific device, like the LA-2A)
+  - `kind`: `group` (a family page, like Compressor), `type` (a specific kind, like a VCA compressor), or `unit` (a specific device, like the LA-2A)
+  - `parent`: the group page's id, on every type or unit that belongs to a family. The group page itself has no parent. Use this for families with many distinct kinds, including compressor, and later EQ, reverb, and saturation.
+  - `typeGroup`: a short label that clusters sibling cards on the group page. Reuse the same labels for every sibling, such as Circuit, Job, and Style.
+  - `typeOrder`: optional sort key. Lower numbers come first among siblings.
 - **Overview:**
   - `summary`: one sentence
   - `cheatSheet`: 3 to 8 bullets

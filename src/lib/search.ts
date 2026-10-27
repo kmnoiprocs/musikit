@@ -8,6 +8,7 @@ import {
   instrumentFamilies,
   library,
   pillarHref,
+  effectsById,
   refForEffect,
   refForGenre,
   refForGlossary,
@@ -120,7 +121,20 @@ function buildItems(): SearchItem[] {
 
   for (const e of library.effects) {
     const r = refForEffect(e)
-    items.push({ key: r.ref, group: 'Effects', title: e.name, subtitle: r.kindLabel, href: r.href, color: r.color, icon: r.icon, ready: true, boost: 8, keywords: e.aliases, body: [e.summary, ...e.cheatSheet].join(' ') })
+    const parent = e.parent ? effectsById.get(e.parent) : undefined
+    items.push({
+      key: r.ref,
+      group: 'Effects',
+      title: e.name,
+      subtitle: parent ? `${parent.name} · ${e.typeGroup ?? 'Type'}` : e.kind === 'group' ? `${r.kindLabel} · Group` : r.kindLabel,
+      href: r.href,
+      color: r.color,
+      icon: r.icon,
+      ready: true,
+      boost: e.kind === 'group' ? 10 : 8,
+      keywords: [...e.aliases, parent?.name ?? '', e.typeGroup ?? ''].filter(Boolean),
+      body: [e.summary, ...e.cheatSheet].join(' '),
+    })
   }
   for (const i of library.instruments) {
     const r = refForInstrument(i)

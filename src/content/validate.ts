@@ -274,6 +274,22 @@ export function validateContent(raw: RawCollections): ValidationResult {
     if (entry.status !== 'stub' && !(modes.has('major') && modes.has('minor'))) warn(file, 'progressions: consider including both major and minor examples')
   }
 
+  for (const { file, entry } of parsed.effects) {
+    if (entry.kind === 'group' && entry.parent) error(file, 'a group effect cannot have a parent')
+    if (!entry.parent) continue
+    if (entry.parent === entry.id) {
+      error(file, 'an effect cannot be its own parent')
+      continue
+    }
+    const parent = parsed.effects.find((item) => item.entry.id === entry.parent)?.entry
+    if (!parent) {
+      error(file, `parent effect "${entry.parent}" does not exist`)
+      continue
+    }
+    if (parent.kind !== 'group') error(file, `parent effect "${entry.parent}" must be an effect group`)
+    if (parent.category !== entry.category) error(file, `parent effect "${entry.parent}" is in a different category`)
+  }
+
   for (const { file, entry } of parsed.instruments) {
     const { lowest, highest, midiLow, midiHigh } = entry.range
     if (noteToMidi(lowest) !== midiLow) error(file, `range.midiLow ${midiLow} does not match ${lowest} (= ${noteToMidi(lowest)})`)
