@@ -18,6 +18,7 @@ The reference canon MusiKit consolidates, grouped by discipline. Cite these (or 
 - **Business:** Donald Passman, *All You Need to Know About the Music Business*; Ari Herstand, *How to Make It in the New Music Business*; The MLC; SoundExchange; Symphonic and PMA royalty checklists.
 - **Immersive audio:** Dolby Atmos Music Creation 101; Apple Music for Artists spatial-audio requirements.
 - **Plugins (2026):** SOS Awards 2026 (Pro-Q 4, Kontakt 8, V Collection 11); Bedroom Producers Blog and Attack Magazine "Best Free Plugins 2026" (Surge XT, Vital, Decent Sampler with Pianobook, Valhalla Supermassive, TDR Nova, Spitfire LABS moving into Splice INSTRUMENT).
+- **Stock DAW manuals:** the current official manual is the only source for a stock plugin's controls and edition. Image-Line (FL Studio), Avid (Pro Tools), Ableton, Apple (Logic Pro and GarageBand), Steinberg (Cubase), PreSonus (Studio One), Cockos (Reaper), Bitwig.
 
 Facts that change over time (loudness targets, plugin versions, platform policies) get a "last verified" date and sit on a re-verification list.
 
@@ -29,6 +30,7 @@ Every content entry has a `lastVerified` date (`YYYY-MM-DD`). Re-check the items
 - **Broadcast loudness:** EBU R128 (-23 LUFS), ATSC A/85 (-24 LKFS).
 - **Dolby Atmos delivery:** the Apple Music loudness and true-peak spec; ADM BWF requirements; the ban on stereo upmixes and demixed stems.
 - **Plugin versions and prices:** everything in `src/content/plugins/` (for example Serum 2, Pro-Q 4, Ozone 12, Kontakt 8, V Collection 11, and the move of Spitfire LABS into Splice INSTRUMENT).
+- **DAW editions and stock plugin lists:** which plugins ship with FL Studio Fruity, Producer, Signature, and All Plugins Edition; Pro Tools Intro, Artist, and Studio; Ableton Intro, Standard, and Suite; and the other priority DAWs. Recheck when a DAW version changes.
 - **Platform policies:** the Spotify 1,000-stream royalty threshold (2024), the Spotify for Artists pitch window (at least 7 days), distributor AI-disclosure and impersonation rules, and Content ID rules for loops and samples.
 - **AI tool licensing:** commercial-use terms for each plan of the generation tools (Suno, Udio, ElevenLabs Music, AIVA).
 - **Royalty organizations:** PRO membership rules and the scope of MLC and SoundExchange registration.

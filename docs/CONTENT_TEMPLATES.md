@@ -54,8 +54,23 @@ Used by effects, instruments, and genres. Every ID must exist in the plugin regi
 - **`proAlternatives`:** equally professional options with a different sound or workflow.
 - **`budget`:** plugins whose registry `priceTier` is `budget` (under $50).
 - **`free`** (at least 1): plugins whose registry `priceTier` is `free`.
-- **`stock`:** the stock equivalent in each DAW, as `{ daw, name }`.
+- **`stock`:** the stock equivalent in each priority DAW, as `{ daw, name, note? }`. The note is one line (edition, or "no stock equivalent; use X for the job"). The full knob-by-knob page is a stock-plugin entry, linked from this row once that page exists.
 - **`notes`:** anything the tiers can't express, such as which free library to load into a free sampler.
+
+**Priority DAWs, every stock row:** FL Studio, Ableton Live, Logic Pro, Pro Tools, Cubase, Studio One, Reaper, Bitwig Studio, and GarageBand. FL Studio and Pro Tools are never skipped because three other DAWs were already filled in. If a DAW has no equivalent, say so. The validator still only requires three stock rows, so Stage 4 is not blocked. The writing standard is the full list.
+
+## Stock plugin or instrument page (Part 21.10)
+
+One page per bundled device. Added when the first DAW batch starts. Do not write these during the Stage 4 golden entries.
+
+- **Identity:** `id`, `name`, `daw`, `kind` (`effect` or `instrument`), `edition` (the cheapest edition that includes it), `aliases`.
+- **Manual:** `summary`, `cheatSheet`, `whenToUse`, `whenNotToUse`.
+- **Controls:** every knob, switch, slider, and meter from the current official manual, each with what it does, its range when the manual prints one, and a starting value when a starting point is honest.
+- **Use:** `startingSettings` for vocal, drums, bass, and bus where the device is actually used that way. `techniques` and `mistakes`.
+- **Connections:** `effect` or `instrument` ref to the encyclopedia page. `pluginRecs` for third-party alternatives at industry, pro, budget, and free. Sibling stock devices in the same DAW.
+- **Provenance:** `sources` must include the official manual URL. `lastVerified` is the day that manual was checked.
+
+A shared Logic and GarageBand device can be one page only when the controls match. The page says what GarageBand removes.
 
 ## Plugin registry entry
 
@@ -104,7 +119,8 @@ Used by effects, instruments, and genres. Every ID must exist in the plugin regi
 **Required to publish:**
 - At least 2 sources and 4 cheat-sheet bullets.
 - At least 3 controls, 2 variants, 1 when-not-to-use, 3 starting settings, 3 techniques, 2 unorthodox techniques, and 3 mistakes.
-- At least 1 pro alternative, 1 budget plugin, and 3 stock DAW equivalents.
+- At least 1 pro alternative, 1 budget plugin, and 3 stock DAW equivalents (the validator floor).
+- The writing standard is stricter: name all nine priority DAWs in `pluginRecs.stock`, including FL Studio and Pro Tools, or write that the DAW has no equivalent.
 
 ## Instrument entry (Part 19)
 

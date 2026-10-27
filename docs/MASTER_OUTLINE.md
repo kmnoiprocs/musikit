@@ -43,9 +43,10 @@ flowchart LR
   - OS tuning; dedicated drives for sample libraries.
 - **1.3 DAWs:**
   - Profiles and best fits: Ableton Live, FL Studio, Logic Pro, Pro Tools, Cubase, Studio One, Reaper, Bitwig, Reason, Cakewalk/Sonar, GarageBand, BandLab, Luna, Digital Performer, Ardour, LMMS, Renoise, Waveform; MPC and Maschine software.
-  - Strong stock plugins in each.
+  - FL Studio and Pro Tools are first-class here. FL Studio is one of the main DAWs for the bedroom producers this guide is for, and Pro Tools is the studio standard a lot of those same readers will meet.
   - Which genres tend to use which DAW.
   - Quick-start cards for each DAW.
+  - Editions, and what "stock" means in each one. The full bundled-plugin manuals live in Part 21.
 - **1.4 Audio interfaces:**
   - Inputs and outputs; preamps; phantom power; Hi-Z instrument inputs.
   - Round-trip latency; clocking; loopback.
@@ -1113,6 +1114,23 @@ flowchart LR
     - Copyright and human authorship.
     - An ethics guide.
 - **21.9 Hardware versus software decisions.**
+- **21.10 Stock plugin and instrument encyclopedia:** every effect and instrument that ships inside a priority DAW gets its own page. The short "Stock" row on an effect, instrument, or genre page only names the equivalent and links here. The knobs live on the stock page.
+  - **Priority DAWs, in batch order:** FL Studio, Pro Tools, Ableton Live, Logic Pro, GarageBand, Cubase, Studio One, Reaper, Bitwig Studio.
+  - **Second wave:** Reason, Cakewalk/Sonar, BandLab, FL Studio Mobile, Logic for iPad. Full pages, after the priority set.
+  - **Edition rule:** "stock" means included with that edition, not sold as an add-on. FL Studio Fruity, Producer, Signature, and All Plugins Edition do not ship the same plugins. Pro Tools Intro, Artist, and Studio do not either. Ableton Intro, Standard, and Suite do not either. Every page names the cheapest edition that includes it, and says so when a cheaper edition lacks it.
+  - **Source rule:** the control list comes from that DAW's current official manual. Do not invent a knob, a range, or an edition. If the manual does not document a control, leave it out.
+  - **What each page contains:** what it is; when to reach for it and when not to; every knob, switch, slider, and meter; starting settings on a vocal, drums, bass, and a bus where that makes sense; common and unorthodox uses; the closest third-party alternatives at industry, pro, budget, and free tiers, by registry ID; a link to the matching effect or instrument page.
+  - **No silent gaps:** on an effect or instrument page, every priority DAW appears in the stock row. If that DAW has no equivalent, the row says so in one sentence and names the closest stock device that can fake the job. FL Studio and Pro Tools are never left off because three other DAWs were already listed.
+  - **One DAW per batch:** start from the official plugin list for the current version, write 8 to 15 pages, then the next batch of that DAW until its list is done. FL Studio is the first batch.
+- **21.11 FL Studio stock plugins and instruments.** Image-Line's bundled effects and generators, from the current manual, including the compressor path (Fruity Limiter, and the older Fruity Compressor), Maximus, Parametric EQ 2, the delay and reverb set, Gross Beat, and the generators (Sytrus, Harmor, Harmless, FLEX, DirectWave, Sampler, Slicex, and the rest of the edition chart). The manual decides the final list, not this bullet.
+- **21.12 Pro Tools stock plugins and instruments.** Avid's bundled plug-ins for the current Intro, Artist, and Studio tiers: dynamics, EQ, reverbs and delays, pitch, and the instrument set that actually ships with each tier.
+- **21.13 Ableton Live stock devices and instruments.** Every audio effect, MIDI effect, and instrument in the current Live manual, marked by Intro, Standard, or Suite.
+- **21.14 Logic Pro and GarageBand stock plug-ins and instruments.** Logic's full set, then which of those GarageBand includes. One page can cover a shared device when the controls match, and must say what GarageBand removes.
+- **21.15 Cubase stock plug-ins and instruments.** Steinberg's bundled set for the current edition line (Elements, Artist, Pro), including the compressor variants that are separate plug-ins.
+- **21.16 Studio One stock plug-ins and instruments.** PreSonus's bundled effects and instruments, by edition.
+- **21.17 Reaper stock plug-ins.** The ReaPlugs set (ReaComp, ReaEQ, ReaVerb, and the rest) plus JS effects that ship with Reaper. JS plugs that are tiny variants can share a page when the manual treats them as one family.
+- **21.18 Bitwig Studio stock devices and instruments.** Bitwig's device set, including the Grid only as its own page rather than as a knob-by-knob dump of every module.
+- **21.19 Second-wave DAWs.** Reason, Cakewalk/Sonar, BandLab, FL Studio Mobile, and Logic for iPad. Same page template, after 21.11 through 21.18.
 
 ### Part 22: Workflow, Templates and Productivity
 - **22.1 DAW templates:** beatmaking, songwriting, vocal tracking, mixing, mastering, scoring, live.
@@ -1285,6 +1303,7 @@ Platform decision: an installable web app that works offline (PWA), built with R
 - **Stage 5: Content batches.**
   - One Guide part, or 8 to 15 encyclopedia entries, per session.
   - Loop: research, write, validate, review visually, commit.
+  - Stock DAW plugins are their own batches (Part 21.10), one DAW at a time, FL Studio first and Pro Tools second. They are not part of the Stage 4 golden entries. Stage 4 stock rows only have to name the priority DAWs and link forward.
 - **Stage 6: Interactive tools,** one or two per session.
 - **Stage 7: Quality pass.** Accessibility, performance, link audit, Playwright smoke tests, and re-verification of time-sensitive facts.
 
@@ -1294,9 +1313,10 @@ Platform decision: an installable web app that works offline (PWA), built with R
 2. Choose the app stack and build the shell: navigation, color system, template components, search.
 3. Start Here, Foundations, and the Quick Reference Hub (highest value for beginners).
 4. Recording, Editing, Mixing, Mastering, Immersive.
-5. Effects Encyclopedia, one category per batch.
-6. Theory, Ear Training, Songwriting, Lyricism, Rap, Singing.
-7. Beatmaking, Drums, Sound Design, Arrangement, Media.
-8. Instrument Encyclopedia, one family per batch.
-9. Genre Encyclopedia, one family per batch.
-10. Plugins and Tools, Workflow, Live, Business, Health, Profiles, Interactive Tools.
+5. Effects Encyclopedia, one category per batch. Stock rows on those pages name every priority DAW, including FL Studio and Pro Tools, or say that DAW has no equivalent.
+6. Stock plugin and instrument encyclopedia (Part 21.10), one DAW per batch: FL Studio, then Pro Tools, then Ableton Live, Logic Pro and GarageBand, Cubase, Studio One, Reaper, Bitwig Studio, then the second wave.
+7. Theory, Ear Training, Songwriting, Lyricism, Rap, Singing.
+8. Beatmaking, Drums, Sound Design, Arrangement, Media.
+9. Instrument Encyclopedia, one family per batch.
+10. Genre Encyclopedia, one family per batch.
+11. The rest of Plugins and Tools, Workflow, Live, Business, Health, Profiles, Interactive Tools.

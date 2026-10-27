@@ -79,6 +79,7 @@ App code (Stage 3):
 - **No invented facts:** never invent songs, release years, artist facts, plugin features, prices, or versions. If you can't verify something, leave it out.
 - **Plugin versions:** set a plugin's `version` only when it has been verified.
 - **Plugin references:** recommend plugins only by registry ID. The free and budget tiers must match each plugin's registry `priceTier`.
+- **Stock DAWs:** FL Studio, Ableton Live, Logic Pro, Pro Tools, Cubase, Studio One, Reaper, Bitwig Studio, and GarageBand. A stock row names each one, or says that DAW has no equivalent. FL Studio and Pro Tools are never omitted. Knob-by-knob stock pages are Part 21.10 and are written one DAW per batch, from the official manual, not during Stage 4.
 - **Time-sensitive facts:** loudness targets, platform policies, and prices belong on the re-verification list in `docs/SOURCES.md`.
 - **Safety:** health and legal topics (vocal health, hearing, copyright, contracts) get a `warning` callout recommending a professional where appropriate.
 

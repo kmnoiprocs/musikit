@@ -203,14 +203,29 @@ export function EffectPage() {
           actions={<BookmarkButton page={{ href: ref.href, title: effect.name, kind: `Effect · ${ref.kindLabel}`, color: C }} />}
         />
       }
+      collapsible
       cheatSheet={<CheatSheetCard items={effect.cheatSheet} />}
       sections={[
+        {
+          id: 'how-it-works',
+          title: 'How It Works',
+          icon: Gauge,
+          defaultOpen: true,
+          content: (
+            <div className="space-y-4">
+              <Paragraph text={effect.howItWorks} />
+              <Expandable compact title="History" summary="Where this effect came from">
+                <Paragraph text={effect.history} />
+              </Expandable>
+            </div>
+          ),
+        },
         {
           id: 'types',
           title: 'Types',
           icon: Layers,
           cheat: true,
-          description: 'Each card is its own page: what it sounds like, where to start, and which plugins actually do that job.',
+          description: 'Each card is its own page. Open the one that matches the job.',
           content: children.length > 0 && (
             <EntryGrid
               items={children.map((child) => effectCard(child, child.typeGroup))}
@@ -241,17 +256,11 @@ export function EffectPage() {
           ),
         },
         {
-          id: 'how-it-works',
-          title: 'How It Works',
-          icon: Gauge,
-          content: (
-            <div className="space-y-4">
-              <Paragraph text={effect.howItWorks} />
-              <Expandable title="History" summary="Where this effect came from">
-                <Paragraph text={effect.history} />
-              </Expandable>
-            </div>
-          ),
+          id: 'when',
+          title: 'When to Use It',
+          icon: Target,
+          cheat: true,
+          content: <WhenToUse yes={effect.whenToUse} no={effect.whenNotToUse} />,
         },
         {
           id: 'controls',
@@ -285,25 +294,6 @@ export function EffectPage() {
           ),
         },
         {
-          id: 'meters',
-          title: 'Meters',
-          icon: Gauge,
-          content: effect.meters.length > 0 && <NamedList items={effect.meters} />,
-        },
-        {
-          id: 'variants',
-          title: children.length > 0 ? 'Variants' : 'Types & Variants',
-          icon: Disc3,
-          content: effect.variants.length > 0 && <NamedList items={effect.variants} />,
-        },
-        {
-          id: 'when',
-          title: 'When to Use It',
-          icon: Target,
-          cheat: true,
-          content: <WhenToUse yes={effect.whenToUse} no={effect.whenNotToUse} />,
-        },
-        {
           id: 'starting-settings',
           title: 'Starting Settings',
           icon: SlidersHorizontal,
@@ -327,6 +317,20 @@ export function EffectPage() {
                 ),
               }))}
             />
+          ),
+        },
+        {
+          id: 'chain',
+          title: 'Where It Goes in the Chain',
+          icon: Link2,
+          cheat: true,
+          content: (
+            <div className="card flex gap-3 p-4">
+              <Link2 className="mt-0.5 size-5 shrink-0 text-accent-ink" aria-hidden />
+              <p className="text-[15px] leading-relaxed text-fg/85">
+                <RichText text={effect.chainPlacement} />
+              </p>
+            </div>
           ),
         },
         {
@@ -355,6 +359,7 @@ export function EffectPage() {
             </div>
           ),
         },
+        { id: 'plugins', title: 'Plugins', icon: Sparkles, cheat: true, content: <PluginTierPanel recs={effect.pluginRecs} /> },
         {
           id: 'mistakes',
           title: 'Mistakes & Myths',
@@ -371,20 +376,17 @@ export function EffectPage() {
           ),
         },
         {
-          id: 'chain',
-          title: 'Where It Goes in the Chain',
-          icon: Link2,
-          cheat: true,
-          content: (
-            <div className="card flex gap-3 p-4">
-              <Link2 className="mt-0.5 size-5 shrink-0 text-accent-ink" aria-hidden />
-              <p className="text-[15px] leading-relaxed text-fg/85">
-                <RichText text={effect.chainPlacement} />
-              </p>
-            </div>
-          ),
+          id: 'variants',
+          title: 'Variants',
+          icon: Disc3,
+          content: effect.variants.length > 0 && <NamedList items={effect.variants} />,
         },
-        { id: 'plugins', title: 'Plugins', icon: Sparkles, cheat: true, content: <PluginTierPanel recs={effect.pluginRecs} /> },
+        {
+          id: 'meters',
+          title: 'Meters',
+          icon: Gauge,
+          content: effect.meters.length > 0 && <NamedList items={effect.meters} />,
+        },
         {
           id: 'hardware',
           title: 'Classic Hardware',
